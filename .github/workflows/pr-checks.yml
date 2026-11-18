@@ -1,0 +1,103 @@
+# The safety net. Runs on every pull request (proposed change).
+# 1. Builds the site and checks it: code check, HTML check, broken links,
+#    and that every page has a title, description, and one H1.
+# 2. Puts the change on a private preview address and comments the link on the PR.
+# 3. Runs the browser tests and the Lighthouse speed/quality check against that preview.
+# If any step fails, GitHub will not allow the change to be merged.
+name: PR checks
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Build and check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FORM_ACCESS_KEY: ${{ secrets.FORM_ACCESS_KEY }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Code check
+        run: npm run check
+      - name: HTML check
+        run: npx html-validate "dist/**/*.html"
+      - name: Broken links, titles, descriptions, and headings
+        run: node scripts/check-links.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: dist
+          retention-days: 3
+
+  preview:
+    name: Preview, tests, and Lighthouse
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      PREVIEW_NAME: pr-${{ github.event.pull_request.number }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v5
+        with:
+          name: site
+          path: dist
+      - name: Deploy the preview
+        id: deploy
+        run: |
+          npx wrangler preview --name "$PREVIEW_NAME" --message "PR #${{ github.event.pull_request.number }}" | tee preview.log
+          url=$(grep -oE 'Preview URL: https://[^ ]+' preview.log | head -1 | sed 's/Preview URL: //')
+          if [ -z "$url" ]; then echo "Could not find the preview address"; exit 1; fi
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+      - name: Post the preview link on the PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          URL: ${{ steps.deploy.outputs.url }}
+        run: |
+          body="**Preview of this change:** $URL
+
+          Open it on your phone or computer to see the change before it goes live. (Updated for commit ${GITHUB_SHA::7}.)"
+          gh pr comment ${{ github.event.pull_request.number }} --edit-last --create-if-none --body "$body"
+      - name: Wait for the preview to answer
+        env:
+          URL: ${{ steps.deploy.outputs.url }}
+        run: |
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "$URL/") || true
+            [ "$code" = "200" ] && exit 0
+            sleep 5
+          done
+          echo "Preview did not respond"; exit 1
+      - run: npx playwright install --with-deps chromium
+      - name: Browser tests (phone and desktop) against the preview
+        env:
+          BASE_URL: ${{ steps.deploy.outputs.url }}
+          CI: 'true'
+        run: npx playwright test
+      - name: Lighthouse (every page must score 90+)
+        run: node scripts/lighthouse.mjs "${{ steps.deploy.outputs.url }}"

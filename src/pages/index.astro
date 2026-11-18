@@ -5,8 +5,8 @@ import CtaBand from '../components/CtaBand.astro';
 import { business } from '../data/business';
 import hero from '../assets/photos/room-sealed-top-plates-wide.jpg';
 import seams from '../assets/photos/liquid-applied-seams-top-plate.jpg';
-import sill from '../assets/photos/sill-plate-corner-sealed.jpg';
-import ceiling from '../assets/photos/ceiling-penetrations-sealed.jpg';
+import drywallBox from '../assets/photos/drywall-electrical-box-sealed.jpg';
+import postDrywall from '../assets/photos/post-drywall-penetrations-sealed.jpg';
 ---
 
 <Base
@@ -46,7 +46,7 @@ import ceiling from '../assets/photos/ceiling-penetrations-sealed.jpg';
         <span class="eyebrow">About our name</span>
         <h2>A name built on airtightness</h2>
         <p>
-          Our name refers to <strong>2.0 ACH</strong>, a high-performance airtightness benchmark. Every project has its own target, whether 3.0, 2.0, 1.5, or another value, and our work is planned around the target your project requires.
+          The “2.0” in our name comes from <strong>2.0 ACH</strong>, a demanding standard for how airtight a house is. Not every house is built to that number. Each project has its own airtightness target, such as 3.0, 2.0, or 1.5, and we plan our air sealing around it.
         </p>
       </div>
       <div class="card explain">
@@ -54,9 +54,6 @@ import ceiling from '../assets/photos/ceiling-penetrations-sealed.jpg';
         <p>
           ACH50 is how many times a house’s air is replaced per hour during a blower door test, at a pressure similar
           to a 20–25 mph wind. Lower is tighter.
-        </p>
-        <p class="note">
-          Blower door testing is performed by a third party, such as the builder’s energy rater. 2.0 Air provides the air sealing.
         </p>
       </div>
     </div>
@@ -85,8 +82,8 @@ import ceiling from '../assets/photos/ceiling-penetrations-sealed.jpg';
       </div>
       <div class="strip">
         <Image src={seams} alt="Blue liquid-applied sealant over wall sheathing seams and along a top plate" widths={[400, 700]} sizes="(min-width: 760px) 360px, 100vw" />
-        <Image src={ceiling} alt="Vent pipe, drain pipe, and wire sealed where they pass through a top plate" widths={[400, 700]} sizes="(min-width: 760px) 360px, 100vw" />
-        <Image src={sill} alt="Sealant along the bottom plate and corner framing of an exterior wall" widths={[400, 700]} sizes="(min-width: 760px) 360px, 100vw" />
+        <Image src={postDrywall} alt="Drywall with an electrical box and a pipe sealed where they pass through the wall" widths={[400, 700]} sizes="(min-width: 760px) 360px, 100vw" />
+        <Image src={drywallBox} alt="Electrical box sealed to the drywall around its edges" widths={[400, 700]} sizes="(min-width: 760px) 360px, 100vw" />
       </div>
       <p class="more"><a href="/services/">View services and materials →</a></p>
     </div>
@@ -164,11 +161,6 @@ import ceiling from '../assets/photos/ceiling-penetrations-sealed.jpg';
     .why {
       grid-template-columns: 1.1fr 1fr;
     }
-  }
-  .explain .note {
-    font-size: 0.95rem;
-    color: var(--muted);
-    margin: 0;
   }
   .services {
     margin-top: 24px;

@@ -24,6 +24,7 @@
     "@astrojs/check": "^0.9.12",
     "@playwright/test": "^1.65.1",
     "chrome-launcher": "^1.2.3",
+    "html-validate": "^9.7.1",
     "lighthouse": "^12.8.2",
     "typescript": "^6.0.3",
     "wrangler": "^4.164.0"

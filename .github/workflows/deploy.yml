@@ -1,0 +1,42 @@
+# Publishes the site. Runs when a pull request is merged into main
+# (the owner clicking "Merge" is the approval).
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      FORM_ACCESS_KEY: ${{ secrets.FORM_ACCESS_KEY }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Final link check
+        run: node scripts/check-links.mjs
+      - name: Publish to Cloudflare
+        run: npx wrangler deploy
+      # Tells Bing and other search engines the pages changed. Turned on after the
+      # real web address is connected (set the repository variable INDEXNOW=on).
+      - name: Notify search engines
+        if: vars.INDEXNOW == 'on'
+        run: node scripts/indexnow.mjs
+        continue-on-error: true
