@@ -11,7 +11,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "test": "playwright test"
+    "test": "playwright test",
+    "lighthouse": "node scripts/lighthouse.mjs",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.5",
@@ -21,6 +23,8 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
     "@playwright/test": "^1.65.1",
+    "chrome-launcher": "^1.2.3",
+    "lighthouse": "^12.8.2",
     "typescript": "^6.0.3",
     "wrangler": "^4.164.0"
   },

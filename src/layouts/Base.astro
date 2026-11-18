@@ -3,7 +3,7 @@ import '@fontsource-variable/montserrat';
 import { getImage } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { business, allTowns } from '../data/business';
+import { business } from '../data/business';
 import ogPhoto from '../assets/photos/room-sealed-top-plates-wide.jpg';
 
 interface Props {
@@ -22,12 +22,15 @@ const jsonLd = {
   name: business.legalName,
   alternateName: [business.name, business.altName],
   url: business.url,
-  logo: new URL('/logo.svg', business.url).href,
+  logo: new URL('/logo.png', business.url).href,
   image: ogUrl,
   telephone: business.phoneE164,
   email: business.email,
   openingHours: business.hoursSchema,
-  areaServed: allTowns.map((t) => ({ '@type': 'City', name: t })),
+  areaServed: [
+    ...business.towns.washington.map((t) => ({ '@type': 'City', name: `${t}, WA` })),
+    ...business.towns.idaho.map((t) => ({ '@type': 'City', name: `${t}, ID` })),
+  ],
   description:
     'High-performance whole-house air sealing for new construction in Spokane and North Idaho.',
 };
@@ -179,11 +182,12 @@ const jsonLd = {
     font-family: inherit;
   }
   .btn--primary {
-    background: var(--blue);
+    /* Darker than the logo blue so white button text is easy to read. */
+    background: var(--blue-dark);
     color: var(--white);
   }
   .btn--primary:hover {
-    background: var(--blue-dark);
+    background: var(--navy-2);
   }
   .btn--ghost {
     border-color: currentColor;
