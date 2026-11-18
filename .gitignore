@@ -11,3 +11,6 @@ brand/*.pdf
 .claude/
 .astro/
 /photos/
+screenshots/
+test-results/
+playwright-report/
