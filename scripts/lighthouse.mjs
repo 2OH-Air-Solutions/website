@@ -8,6 +8,9 @@ import desktopConfig from 'lighthouse/core/config/desktop-config.js';
 const base = process.argv[2] || 'http://localhost:4321';
 const pages = ['/', '/services/', '/about/', '/contact/', '/privacy/'];
 const port = 9333;
+// Cloudflare preview addresses (*.workers.dev) tell Google not to list them,
+// which is correct for a preview. Skip that one SEO item there.
+const skipAudits = base.includes('.workers.dev') ? ['is-crawlable'] : undefined;
 
 const browser = await chromium.launch({ args: [`--remote-debugging-port=${port}`] });
 let failed = false;
@@ -16,7 +19,7 @@ for (const path of pages) {
   for (const form of ['phone', 'desktop']) {
     const result = await lighthouse(
       base + path,
-      { port, output: 'json', logLevel: 'error' },
+      { port, output: 'json', logLevel: 'error', skipAudits },
       form === 'desktop' ? desktopConfig : undefined,
     );
     const cats = result.lhr.categories;
