@@ -1,0 +1,91 @@
+---
+import logoWhite from '../assets/logo-white.svg?url';
+import { business } from '../data/business';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer stripes">
+  <div class="wrap cols">
+    <div>
+      <img src={logoWhite} alt="2.0 Air" width="186" height="37" class="logo" />
+      <p class="tag">High-performance whole-house air sealing</p>
+      <p class="small">Insured and bonded</p>
+    </div>
+    <div>
+      <h2 class="fh">Contact</h2>
+      <p>
+        <a href={business.phoneHref}>{business.phone}</a><br />
+        <a href={`mailto:${business.email}`}>{business.email}</a>
+      </p>
+      <p class="small">{business.hours}</p>
+    </div>
+    <div>
+      <h2 class="fh">Service area</h2>
+      <p class="small">
+        <strong>Washington:</strong>
+        {business.towns.washington.join(', ')}<br />
+        <strong>Idaho:</strong>
+        {business.towns.idaho.join(', ')}
+      </p>
+    </div>
+  </div>
+  <div class="wrap legal">
+    <p>
+      © {year}
+      {business.legalName} · <a href="/privacy/">Privacy policy</a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--navy);
+    color: #dce6f5;
+    padding: 56px 0 24px;
+  }
+  .cols {
+    display: grid;
+    gap: 32px;
+    position: relative;
+    z-index: 1;
+  }
+  @media (min-width: 760px) {
+    .cols {
+      grid-template-columns: 1.2fr 1fr 1.2fr;
+      padding-right: 140px;
+    }
+  }
+  .logo {
+    height: 32px;
+    width: auto;
+    margin-bottom: 12px;
+  }
+  .tag {
+    font-weight: 600;
+    color: var(--white);
+  }
+  .fh {
+    color: var(--white);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.8em;
+  }
+  .site-footer a {
+    color: var(--white);
+  }
+  .small {
+    font-size: 0.95rem;
+  }
+  .legal {
+    position: relative;
+    z-index: 1;
+    margin-top: 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    padding-top: 16px;
+    font-size: 0.85rem;
+  }
+  .legal p {
+    margin: 0;
+  }
+</style>

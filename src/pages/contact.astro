@@ -1,0 +1,216 @@
+---
+import Base from '../layouts/Base.astro';
+import { business } from '../data/business';
+const accessKey = import.meta.env.FORM_ACCESS_KEY as string;
+const redirect = new URL('/thank-you/', business.url).href;
+---
+
+<Base
+  title="Contact 2.0 Air | Request an Air Sealing Quote"
+  description="Request an air sealing quote from 2.0 Air. Call (509) 903-8595 or send a message. Serving Spokane and North Idaho, Monday–Friday, 7am–5pm."
+>
+  <section class="section">
+    <div class="wrap contact-grid">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h1>Request a quote</h1>
+        <p class="lead">Tell us about your project, and we’ll get back to you.</p>
+
+        <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
+          <input type="hidden" name="access_key" value={accessKey} />
+          <input type="hidden" name="subject" value="New website message for 2.0 Air" />
+          <input type="hidden" name="from_name" value="2.0 Air website" />
+          <input type="hidden" name="redirect" value={redirect} />
+          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+          <p class="req-note"><span aria-hidden="true">*</span> Required</p>
+
+          <div class="field">
+            <label for="name">Name <span class="req" aria-hidden="true">*</span></label>
+            <input id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-err" />
+            <p class="err" id="name-err" hidden>Please enter your name.</p>
+          </div>
+
+          <div class="field">
+            <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
+            <input id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-err" />
+            <p class="err" id="email-err" hidden>Please enter a valid email address, like name@example.com.</p>
+          </div>
+
+          <div class="field">
+            <label for="phone">Phone <span class="opt">(optional)</span></label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" />
+          </div>
+
+          <div class="field">
+            <label for="message">Message <span class="req" aria-hidden="true">*</span></label>
+            <textarea
+              id="message"
+              name="message"
+              rows="6"
+              required
+              aria-describedby="message-hint message-err"></textarea>
+            <p class="hint" id="message-hint">For example: the project address or town, the build stage, and your airtightness target.</p>
+            <p class="err" id="message-err" hidden>Please enter a message.</p>
+          </div>
+
+          <button type="submit" class="btn btn--primary">Send message</button>
+          <p class="status" role="status" aria-live="polite"></p>
+        </form>
+        <p class="fallback">
+          Or call us at <a href={business.phoneHref}>{business.phone}</a>.
+        </p>
+      </div>
+
+      <aside class="card info">
+        <h2>Reach us directly</h2>
+        <p>
+          <strong>Phone</strong><br />
+          <a href={business.phoneHref}>{business.phone}</a>
+        </p>
+        <p>
+          <strong>Email</strong><br />
+          <a href={`mailto:${business.email}`}>{business.email}</a>
+        </p>
+        <p>
+          <strong>Hours</strong><br />
+          {business.hours}
+        </p>
+        <p>
+          <strong>Service area</strong><br />
+          {business.regionShort}
+        </p>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  if (form) {
+    const status = form.querySelector('.status') as HTMLElement;
+    const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const fields = ['name', 'email', 'message'].map((id) => ({
+      input: form.querySelector('#' + id) as HTMLInputElement | HTMLTextAreaElement,
+      err: form.querySelector('#' + id + '-err') as HTMLElement,
+    }));
+
+    const validate = () => {
+      let firstBad: HTMLElement | null = null;
+      for (const { input, err } of fields) {
+        const ok = input.value.trim() !== '' && input.checkValidity();
+        err.hidden = ok;
+        input.setAttribute('aria-invalid', ok ? 'false' : 'true');
+        if (!ok && !firstBad) firstBad = input;
+      }
+      firstBad?.focus();
+      return !firstBad;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validate()) return;
+      button.disabled = true;
+      status.textContent = 'Sending…';
+      try {
+        const data = Object.fromEntries(new FormData(form).entries());
+        delete (data as Record<string, unknown>).redirect;
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json().catch(() => ({}));
+        if (res.ok && (json as { success?: boolean }).success !== false) {
+          window.location.href = '/thank-you/';
+          return;
+        }
+        throw new Error('send failed');
+      } catch {
+        status.textContent = 'Sorry, your message didn’t go through. Please try again, or call us.';
+        button.disabled = false;
+      }
+    });
+  }
+</script>
+
+<style>
+  .contact-grid {
+    display: grid;
+    gap: 40px;
+    align-items: start;
+  }
+  @media (min-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1.5fr 1fr;
+    }
+  }
+  form {
+    margin-top: 24px;
+    max-width: 620px;
+  }
+  .field {
+    margin-bottom: 20px;
+  }
+  label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--navy);
+  }
+  input[type='text'],
+  input[type='email'],
+  input[type='tel'],
+  textarea {
+    width: 100%;
+    font: inherit;
+    font-size: 1rem;
+    padding: 12px 14px;
+    border: 2px solid #b8c6d8;
+    border-radius: 10px;
+    background: var(--white);
+    color: var(--ink);
+    min-height: 50px;
+  }
+  input[aria-invalid='true'],
+  textarea[aria-invalid='true'] {
+    border-color: #b42318;
+  }
+  .req {
+    color: #b42318;
+  }
+  .opt,
+  .req-note,
+  .hint {
+    font-weight: 500;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .hint {
+    margin: 6px 0 0;
+  }
+  .err {
+    color: #b42318;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 6px 0 0;
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  .status {
+    margin-top: 12px;
+    font-weight: 600;
+  }
+  .fallback {
+    margin-top: 8px;
+    font-size: 1.05rem;
+  }
+  .info h2 {
+    font-size: 1.3rem;
+  }
+</style>

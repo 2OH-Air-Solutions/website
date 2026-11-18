@@ -1,0 +1,139 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+import wide from '../assets/photos/framed-wall-sealed-plates-windows.jpg';
+import seams from '../assets/photos/liquid-applied-seams-top-plate.jpg';
+import pipe from '../assets/photos/pipe-penetration-closeup.jpg';
+import pipeSill from '../assets/photos/pipe-penetration-sealed-sill.jpg';
+import plumbing from '../assets/photos/plumbing-floor-penetrations.jpg';
+import attic from '../assets/photos/attic-duct-boot-foam.jpg';
+
+const gallery = [
+  { src: seams, alt: 'Blue liquid-applied sealant over sheathing seams and along a top plate' },
+  { src: pipe, alt: 'Close-up of a pipe sealed where it passes through a wall plate' },
+  { src: pipeSill, alt: 'Pipe sealed with gray sealant where it passes through framing' },
+  { src: plumbing, alt: 'Plumbing penetrations through the floor sealed with foam' },
+  { src: attic, alt: 'Foam sealing around a duct in an attic' },
+];
+---
+
+<Base
+  title="Air Sealing Services: Before & After Drywall | 2.0 Air"
+  description="Whole-house air sealing for new homes in Spokane and North Idaho: before drywall, after drywall, and drywall-only sealing for builders."
+>
+  <section class="section intro">
+    <div class="wrap intro-grid">
+      <div>
+        <span class="eyebrow">Services</span>
+        <h1>Whole-house air sealing for new construction</h1>
+        <p class="lead">
+          We air seal new homes in Spokane and North Idaho, aiming for the airtightness target each project calls for.
+        </p>
+      </div>
+      <Image
+        src={wide}
+        alt="Framed wall with blue sealant along the top plate and around window openings"
+        widths={[420, 700]}
+        sizes="(min-width: 900px) 420px, 100vw"
+        class="intro-photo"
+      />
+    </div>
+  </section>
+
+  <section class="section section--mist">
+    <div class="wrap">
+      <h2>When we seal</h2>
+      <div class="grid grid--3">
+        <article class="card" id="before-drywall">
+          <h3>Before drywall</h3>
+          <p>Air sealing while the framing is still open.</p>
+        </article>
+        <article class="card" id="after-drywall">
+          <h3>After drywall</h3>
+          <p>Air sealing once the drywall is up.</p>
+        </article>
+        <article class="card" id="drywall-only">
+          <h3>Drywall-only sealing</h3>
+          <p>
+            For certain builders, we offer drywall sealing on its own, as a standalone service.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid grid--2">
+      <div>
+        <h2>What we use</h2>
+        <ul class="checklist">
+          <li>
+            <strong>Liquid-applied air barrier.</strong> A sealant that’s applied wet over seams and joints.
+          </li>
+          <li><strong>Caulk and foam</strong> for gaps and penetrations.</li>
+          <li>
+            <strong>Sill sealer</strong>, a foam gasket under the plates, installed as part of a whole-house air
+            sealing job.
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2>Your target, your number</h2>
+        <p>
+          Every project has its own airtightness target. Some houses need 3.0 ACH, some 2.0, some 1.5 or another
+          number. Tell us yours, and we’ll plan the sealing around it.
+        </p>
+        <p>
+          The blower door test that measures the result is done by a third party, such as your builder’s energy
+          rater.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--mist">
+    <div class="wrap">
+      <h2>Our work</h2>
+      <div class="gallery">
+        {
+          gallery.map((g) => (
+            <Image src={g.src} alt={g.alt} widths={[360, 600]} sizes="(min-width: 760px) 360px, 100vw" />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand heading="Tell us about your project" />
+</Base>
+
+<style>
+  .intro-grid {
+    display: grid;
+    gap: 32px;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .intro-grid {
+      grid-template-columns: 1.4fr 1fr;
+    }
+  }
+  .intro-grid :global(.intro-photo) {
+    border-radius: var(--radius);
+    width: 100%;
+    max-height: 460px;
+    object-fit: cover;
+  }
+  .gallery {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+  .gallery :global(img) {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+</style>

@@ -1,0 +1,13 @@
+.env.local
+.env*.local
+/guide/
+node_modules/
+dist/
+/photos/originals/
+.site-builder/*.log
+.site-builder/
+brand/*.pdf
+/photos/web/
+.claude/
+.astro/
+/photos/

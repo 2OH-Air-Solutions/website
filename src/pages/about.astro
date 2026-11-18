@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { business } from '../data/business';
+---
+
+<Base
+  title="About 2.0 Air | Air Sealing, Spokane & North Idaho"
+  description="2-OH Air Solutions LLC (2.0 Air) does high-performance whole-house air sealing for new homes in Spokane and North Idaho. Insured and bonded."
+>
+  <section class="section">
+    <div class="wrap narrow">
+      <span class="eyebrow">About us</span>
+      <h1>About 2.0 Air</h1>
+      <p class="lead">
+        {business.legalName}, also known as 2.0 Air or 2-OH Air, does high-performance whole-house air sealing for
+        new construction.
+      </p>
+
+      <h2>The name</h2>
+      <p>
+        “2.0” comes from 2.0 ACH, a high-performance airtightness benchmark. Not every house has the same target.
+        Some need 3.0, some 2.0, some 1.5 or another number. We seal to the target your project calls for.
+      </p>
+
+      <h2>What we do</h2>
+      <ul class="checklist">
+        <li>Whole-house air sealing on new construction, before drywall, after drywall, or both</li>
+        <li>Drywall-only sealing for certain builders</li>
+        <li>Liquid-applied air barrier, caulk, and foam</li>
+      </ul>
+
+      <h2>Who we work with</h2>
+      <p>Home builders and homeowners.</p>
+
+      <h2>Where we work</h2>
+      <p>
+        Mostly around Spokane, and also North Idaho: {business.towns.washington.join(', ')} in Washington, and
+        {' '}{business.towns.idaho.join(', ')} in Idaho.
+      </p>
+
+      <h2>Insured and bonded</h2>
+      <p>2-OH Air Solutions LLC is insured and bonded.</p>
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+
+<style>
+  .narrow {
+    max-width: 780px;
+  }
+  h2 {
+    margin-top: 1.6em;
+    font-size: 1.5rem;
+  }
+</style>

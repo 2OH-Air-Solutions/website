@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import { business } from '../data/business';
+---
+
+<Base
+  title="Privacy Policy | 2.0 Air"
+  description="How the 2.0 Air website handles the information you send through the contact form. No tracking, no ads, no cookies."
+>
+  <section class="section">
+    <div class="wrap narrow">
+      <h1>Privacy policy</h1>
+      <p class="lead">This page explains, in plain language, what this website collects and what happens to it.</p>
+
+      <h2>What we collect</h2>
+      <p>
+        Only what you type into the contact form: your name, email, phone number (if you give one), and your
+        message.
+      </p>
+
+      <h2>Where it goes</h2>
+      <p>
+        The form is handled by a service called Web3Forms. It passes your message on by email to {business.legalName}
+        at {business.email}. We use your details only to reply to you about your project. We don’t sell or share
+        them.
+      </p>
+
+      <h2>How long we keep it</h2>
+      <p>
+        Messages stay in our email inbox for as long as we need them to work with you. If you’d like us to delete
+        your message, email us and we will.
+      </p>
+
+      <h2>No tracking</h2>
+      <p>This website doesn’t use tracking cookies, advertising, or analytics tools.</p>
+
+      <h2>Questions</h2>
+      <p>
+        Email <a href={`mailto:${business.email}`}>{business.email}</a> or call
+        {' '}<a href={business.phoneHref}>{business.phone}</a>.
+      </p>
+      <p class="updated">Last updated: November 2026</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .narrow {
+    max-width: 780px;
+  }
+  h2 {
+    margin-top: 1.5em;
+    font-size: 1.4rem;
+  }
+  .updated {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-top: 2em;
+  }
+</style>
