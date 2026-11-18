@@ -33,9 +33,10 @@
   - Sill sealer (foam gasket under plates), as part of whole-house air sealing only, NOT offered as a standalone service (CONFIRMED: owner, 2026-11-16)
 - NOT our work: insulation. Do not say or imply we install insulation. (CONFIRMED: owner, 2026-11-16)
 - When in the build (CONFIRMED: owner, 2026-11-16):
-  - Pre-drywall sealing
-  - Post-drywall sealing
-  - Drywall-only sealing as a standalone service for certain builders
+  - Pre-Drywall Air Sealing
+  - Post-Drywall Air Sealing
+  - Drywall Air Sealing: drywall-only sealing as a standalone service for certain builders
+  - (Service names chosen by owner, 2026-11-17)
 - Blower door testing: done by someone else (e.g. the builder's energy rater), not by 2-OH Air. Do NOT say we perform the testing. (CONFIRMED: owner, 2026-11-16)
 - Other services: none stated
 
