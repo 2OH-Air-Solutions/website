@@ -3,13 +3,13 @@ import { business } from '../data/business';
 interface Props {
   heading?: string;
 }
-const { heading = 'Planning a build? Let’s talk air sealing.' } = Astro.props;
+const { heading = 'Request a quote for your next project' } = Astro.props;
 ---
 
 <section class="cta stripes">
   <div class="wrap inner">
     <h2>{heading}</h2>
-    <p>Tell us about your project and your airtightness target, and we’ll get back to you with a quote.</p>
+    <p>Share your project details and airtightness target, and we will follow up with a quote.</p>
     <div class="btn-row">
       <a class="btn btn--light" href={business.phoneHref}>Call {business.phone}</a>
       <a class="btn btn--primary" href="/contact/">Request a quote</a>

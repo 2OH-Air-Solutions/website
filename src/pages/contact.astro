@@ -14,7 +14,7 @@ const redirect = new URL('/thank-you/', business.url).href;
       <div>
         <span class="eyebrow">Contact</span>
         <h1>Request a quote</h1>
-        <p class="lead">Tell us about your project, and we’ll get back to you.</p>
+        <p class="lead">Share a few details about your project, and we will follow up.</p>
 
         <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
           <input type="hidden" name="access_key" value={accessKey} />
@@ -50,7 +50,7 @@ const redirect = new URL('/thank-you/', business.url).href;
               rows="6"
               required
               aria-describedby="message-hint message-err"></textarea>
-            <p class="hint" id="message-hint">For example: the project address or town, the build stage, and your airtightness target.</p>
+            <p class="hint" id="message-hint">Helpful details include the project location, construction stage, and airtightness target.</p>
             <p class="err" id="message-err" hidden>Please enter a message.</p>
           </div>
 
@@ -58,12 +58,12 @@ const redirect = new URL('/thank-you/', business.url).href;
           <p class="status" role="status" aria-live="polite"></p>
         </form>
         <p class="fallback">
-          Or call us at <a href={business.phoneHref}>{business.phone}</a>.
+          You can also reach us by phone at <a href={business.phoneHref}>{business.phone}</a>.
         </p>
       </div>
 
       <aside class="card info">
-        <h2>Reach us directly</h2>
+        <h2>Contact information</h2>
         <p>
           <strong>Phone</strong><br />
           <a href={business.phoneHref}>{business.phone}</a>
@@ -127,7 +127,7 @@ const redirect = new URL('/thank-you/', business.url).href;
         }
         throw new Error('send failed');
       } catch {
-        status.textContent = 'Sorry, your message didn’t go through. Please try again, or call us.';
+        status.textContent = 'Your message could not be sent. Please try again, or call us.';
         button.disabled = false;
       }
     });

@@ -3,13 +3,13 @@ import Base from '../layouts/Base.astro';
 import { business } from '../data/business';
 ---
 
-<Base title="Page not found | 2.0 Air" description="Sorry, that page doesn’t exist." noindex>
+<Base title="Page not found | 2.0 Air" description="The page you requested could not be found." noindex>
   <section class="section">
     <div class="wrap narrow">
-      <h1>Sorry, we couldn’t find that page.</h1>
-      <p class="lead">The link may be old, or the address may have a typo.</p>
+      <h1>Page not found</h1>
+      <p class="lead">The page may have moved, or the address may contain a typo.</p>
       <div class="btn-row">
-        <a class="btn btn--primary" href="/">Go to the home page</a>
+        <a class="btn btn--primary" href="/">Return to the home page</a>
         <a class="btn btn--ghost" href={business.phoneHref}>Call {business.phone}</a>
       </div>
     </div>
