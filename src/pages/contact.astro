@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { business } from '../data/business';
+import { business, allTowns } from '../data/business';
 const accessKey = import.meta.env.FORM_ACCESS_KEY as string;
 const redirect = new URL('/thank-you/', business.url).href;
 ---
@@ -42,6 +42,37 @@ const redirect = new URL('/thank-you/', business.url).href;
             <input id="phone" name="phone" type="tel" autocomplete="tel" />
           </div>
 
+          <fieldset class="field choices">
+            <legend>I am a <span class="opt">(optional)</span></legend>
+            <label class="choice"><input type="radio" name="Customer type" value="Builder" /> Builder</label>
+            <label class="choice"><input type="radio" name="Customer type" value="Homeowner" /> Homeowner</label>
+            <label class="choice"><input type="radio" name="Customer type" value="Other" /> Other</label>
+          </fieldset>
+
+          <div class="field">
+            <label for="town">Project town <span class="opt">(optional)</span></label>
+            <input id="town" name="Project town" type="text" autocomplete="address-level2" list="towns" />
+            <datalist id="towns">{allTowns.map((t) => <option value={t} />)}</datalist>
+          </div>
+
+          <div class="field">
+            <label for="stage">Construction stage <span class="opt">(optional)</span></label>
+            <select id="stage" name="Construction stage">
+              <option value="">Choose one</option>
+              <option value="Pre-drywall">Pre-drywall (framing open)</option>
+              <option value="Post-drywall">Post-drywall (drywall installed)</option>
+              <option value="Pre- and post-drywall">Both pre- and post-drywall</option>
+              <option value="Drywall air sealing only">Drywall air sealing only</option>
+              <option value="Not sure">Not sure</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="target">Airtightness target <span class="opt">(optional)</span></label>
+            <input id="target" name="Airtightness target" type="text" inputmode="decimal" aria-describedby="target-hint" />
+            <p class="hint" id="target-hint">For example, 2.0 ACH50. Leave blank if you don't know yet.</p>
+          </div>
+
           <div class="field">
             <label for="message">Message <span class="req" aria-hidden="true">*</span></label>
             <textarea
@@ -50,7 +81,7 @@ const redirect = new URL('/thank-you/', business.url).href;
               rows="6"
               required
               aria-describedby="message-hint message-err"></textarea>
-            <p class="hint" id="message-hint">Helpful details include the project location, construction stage, and airtightness target.</p>
+            <p class="hint" id="message-hint">Anything else about the project, such as the timeline or the number of houses.</p>
             <p class="err" id="message-err" hidden>Please enter a message.</p>
           </div>
 
@@ -88,6 +119,15 @@ const redirect = new URL('/thank-you/', business.url).href;
 <script>
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   if (form) {
+    const stages: Record<string, string> = {
+      'pre-drywall': 'Pre-drywall',
+      'post-drywall': 'Post-drywall',
+      'drywall-air-sealing': 'Drywall air sealing only',
+    };
+    const picked = stages[new URLSearchParams(location.search).get('service') ?? ''];
+    const stageSelect = form.querySelector('#stage') as HTMLSelectElement | null;
+    if (picked && stageSelect) stageSelect.value = picked;
+
     const status = form.querySelector('.status') as HTMLElement;
     const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
     const fields = ['name', 'email', 'message'].map((id) => ({
@@ -161,6 +201,7 @@ const redirect = new URL('/thank-you/', business.url).href;
   input[type='text'],
   input[type='email'],
   input[type='tel'],
+  select,
   textarea {
     width: 100%;
     font: inherit;
@@ -171,6 +212,36 @@ const redirect = new URL('/thank-you/', business.url).href;
     background: var(--white);
     color: var(--ink);
     min-height: 50px;
+  }
+  select {
+    appearance: auto;
+  }
+  .choices {
+    border: 0;
+    padding: 0;
+    margin: 0 0 20px;
+  }
+  .choices legend {
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+    padding: 0;
+  }
+  .choice {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 18px 0 0;
+    min-height: 44px;
+    cursor: pointer;
+  }
+  .choice input {
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    accent-color: var(--blue-dark);
   }
   input[aria-invalid='true'],
   textarea[aria-invalid='true'] {
