@@ -42,13 +42,6 @@ const redirect = new URL('/thank-you/', business.url).href;
             <input id="phone" name="phone" type="tel" autocomplete="tel" />
           </div>
 
-          <fieldset class="field choices">
-            <legend>I am a <span class="opt">(optional)</span></legend>
-            <label class="choice"><input type="radio" name="Customer type" value="Builder" /> Builder</label>
-            <label class="choice"><input type="radio" name="Customer type" value="Homeowner" /> Homeowner</label>
-            <label class="choice"><input type="radio" name="Customer type" value="Other" /> Other</label>
-          </fieldset>
-
           <div class="field">
             <label for="stage">Construction stage <span class="opt">(optional)</span></label>
             <select id="stage" name="Construction stage">
@@ -203,33 +196,6 @@ const redirect = new URL('/thank-you/', business.url).href;
   }
   select {
     appearance: auto;
-  }
-  .choices {
-    border: 0;
-    padding: 0;
-    margin: 0 0 20px;
-  }
-  .choices legend {
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 6px;
-    padding: 0;
-  }
-  .choice {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 500;
-    color: var(--ink);
-    margin: 0 18px 0 0;
-    min-height: 44px;
-    cursor: pointer;
-  }
-  .choice input {
-    width: 24px;
-    height: 24px;
-    margin: 0;
-    accent-color: var(--blue-dark);
   }
   input[aria-invalid='true'],
   textarea[aria-invalid='true'] {
