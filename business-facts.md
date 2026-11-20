@@ -35,7 +35,7 @@
 - When in the build (CONFIRMED: owner, 2026-11-16):
   - Pre-Drywall Air Sealing
   - Post-Drywall Air Sealing
-  - Drywall Air Sealing: drywall-only sealing as a standalone service for certain builders
+  - Standalone Drywall Air Sealing: drywall-only sealing as a standalone service for certain builders (renamed from "Drywall Air Sealing" by owner, 2026-11-19)
   - (Service names chosen by owner, 2026-11-17)
 - Blower door testing: done by someone else (e.g. the builder's energy rater), not by 2-OH Air. Do NOT say we perform the testing. (CONFIRMED: owner, 2026-11-16)
 - Other services: none stated

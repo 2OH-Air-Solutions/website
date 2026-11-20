@@ -64,26 +64,36 @@ import postDrywall from '../assets/photos/post-drywall-penetrations-sealed.jpg';
       <span class="eyebrow">Services</span>
       <h2>Air sealing for new construction</h2>
       <div class="grid grid--3 services">
-        <article class="card">
-          <span class="num">1</span>
-          <h3>Pre-Drywall Air Sealing</h3>
-          <p>Air sealing performed while the framing is open, before drywall is installed.</p>
+        <article class="card svc">
+          <div class="svc-photo">
+            <Image src={seams} alt="Blue liquid-applied sealant over wall sheathing seams and along a top plate" widths={[400, 700]} sizes="(min-width: 960px) 360px, (min-width: 760px) 50vw, 100vw" />
+            <span class="num">1</span>
+          </div>
+          <div class="svc-body">
+            <h3>Pre-Drywall Air Sealing</h3>
+            <p>Air sealing performed while the framing is open, before drywall is installed.</p>
+          </div>
         </article>
-        <article class="card">
-          <span class="num">2</span>
-          <h3>Post-Drywall Air Sealing</h3>
-          <p>Air sealing performed after drywall is installed.</p>
+        <article class="card svc">
+          <div class="svc-photo">
+            <Image src={postDrywall} alt="Drywall with an electrical box and a pipe sealed where they pass through the wall" widths={[400, 700]} sizes="(min-width: 960px) 360px, (min-width: 760px) 50vw, 100vw" />
+            <span class="num">2</span>
+          </div>
+          <div class="svc-body">
+            <h3>Post-Drywall Air Sealing</h3>
+            <p>Air sealing performed after drywall is installed.</p>
+          </div>
         </article>
-        <article class="card">
-          <span class="num">3</span>
-          <h3>Drywall Air Sealing</h3>
-          <p>Drywall sealing as a standalone service, available to select builders.</p>
+        <article class="card svc">
+          <div class="svc-photo">
+            <Image src={drywallBox} alt="Electrical box sealed to the drywall around its edges" widths={[400, 700]} sizes="(min-width: 960px) 360px, (min-width: 760px) 50vw, 100vw" />
+            <span class="num">3</span>
+          </div>
+          <div class="svc-body">
+            <h3>Standalone Drywall Air Sealing</h3>
+            <p>Drywall sealing as its own job, available to select builders.</p>
+          </div>
         </article>
-      </div>
-      <div class="strip">
-        <Image src={seams} alt="Blue liquid-applied sealant over wall sheathing seams and along a top plate" widths={[400, 700]} sizes="(min-width: 760px) 360px, 100vw" />
-        <Image src={postDrywall} alt="Drywall with an electrical box and a pipe sealed where they pass through the wall" widths={[400, 700]} sizes="(min-width: 760px) 360px, 100vw" />
-        <Image src={drywallBox} alt="Electrical box sealed to the drywall around its edges" widths={[400, 700]} sizes="(min-width: 760px) 360px, 100vw" />
       </div>
       <p class="more"><a href="/services/">View services and materials →</a></p>
     </div>
@@ -176,21 +186,33 @@ import postDrywall from '../assets/photos/post-drywall-penetrations-sealed.jpg';
     font-weight: 800;
     margin-bottom: 14px;
   }
-  .strip {
-    display: grid;
-    gap: 16px;
-    margin-top: 28px;
+  .svc {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
-  @media (min-width: 760px) {
-    .strip {
-      grid-template-columns: repeat(3, 1fr);
-    }
+  .svc-photo {
+    position: relative;
   }
-  .strip :global(img) {
+  .svc-photo :global(img) {
+    display: block;
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    border-radius: var(--radius);
+  }
+  .svc-photo .num {
+    position: absolute;
+    left: 16px;
+    bottom: -20px;
+    margin: 0;
+    box-shadow: 0 0 0 4px var(--white);
+  }
+  .svc-body {
+    padding: 34px 24px 26px;
+  }
+  .svc-body p {
+    margin-bottom: 0;
   }
   .more {
     margin-top: 20px;
