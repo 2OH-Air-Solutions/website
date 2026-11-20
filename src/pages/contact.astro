@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { business, allTowns } from '../data/business';
+import { business } from '../data/business';
 const accessKey = import.meta.env.FORM_ACCESS_KEY as string;
 const redirect = new URL('/thank-you/', business.url).href;
 ---
@@ -50,12 +50,6 @@ const redirect = new URL('/thank-you/', business.url).href;
           </fieldset>
 
           <div class="field">
-            <label for="town">Project town <span class="opt">(optional)</span></label>
-            <input id="town" name="Project town" type="text" autocomplete="address-level2" list="towns" />
-            <datalist id="towns">{allTowns.map((t) => <option value={t} />)}</datalist>
-          </div>
-
-          <div class="field">
             <label for="stage">Construction stage <span class="opt">(optional)</span></label>
             <select id="stage" name="Construction stage">
               <option value="">Choose one</option>
@@ -68,12 +62,6 @@ const redirect = new URL('/thank-you/', business.url).href;
           </div>
 
           <div class="field">
-            <label for="target">Airtightness target <span class="opt">(optional)</span></label>
-            <input id="target" name="Airtightness target" type="text" inputmode="decimal" aria-describedby="target-hint" />
-            <p class="hint" id="target-hint">For example, 2.0 ACH50. Leave blank if you don't know yet.</p>
-          </div>
-
-          <div class="field">
             <label for="message">Message <span class="req" aria-hidden="true">*</span></label>
             <textarea
               id="message"
@@ -81,7 +69,7 @@ const redirect = new URL('/thank-you/', business.url).href;
               rows="6"
               required
               aria-describedby="message-hint message-err"></textarea>
-            <p class="hint" id="message-hint">Anything else about the project, such as the timeline or the number of houses.</p>
+            <p class="hint" id="message-hint">Helpful details include the project location, airtightness target, and timeline.</p>
             <p class="err" id="message-err" hidden>Please enter a message.</p>
           </div>
 
