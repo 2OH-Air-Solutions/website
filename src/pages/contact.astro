@@ -43,6 +43,18 @@ const redirect = new URL('/thank-you/', business.url).href;
           </div>
 
           <div class="field">
+            <label for="stage">Construction stage <span class="opt">(optional)</span></label>
+            <select id="stage" name="Construction stage">
+              <option value="">Choose one</option>
+              <option value="Pre-drywall">Pre-drywall (framing open)</option>
+              <option value="Post-drywall">Post-drywall (drywall installed)</option>
+              <option value="Pre- and post-drywall">Both pre- and post-drywall</option>
+              <option value="Drywall air sealing only">Drywall air sealing only</option>
+              <option value="Not sure">Not sure</option>
+            </select>
+          </div>
+
+          <div class="field">
             <label for="message">Message <span class="req" aria-hidden="true">*</span></label>
             <textarea
               id="message"
@@ -50,7 +62,7 @@ const redirect = new URL('/thank-you/', business.url).href;
               rows="6"
               required
               aria-describedby="message-hint message-err"></textarea>
-            <p class="hint" id="message-hint">Helpful details include the project location, construction stage, and airtightness target.</p>
+            <p class="hint" id="message-hint">Helpful details include the project location, airtightness target, and timeline.</p>
             <p class="err" id="message-err" hidden>Please enter a message.</p>
           </div>
 
@@ -88,6 +100,15 @@ const redirect = new URL('/thank-you/', business.url).href;
 <script>
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   if (form) {
+    const stages: Record<string, string> = {
+      'pre-drywall': 'Pre-drywall',
+      'post-drywall': 'Post-drywall',
+      'drywall-air-sealing': 'Drywall air sealing only',
+    };
+    const picked = stages[new URLSearchParams(location.search).get('service') ?? ''];
+    const stageSelect = form.querySelector('#stage') as HTMLSelectElement | null;
+    if (picked && stageSelect) stageSelect.value = picked;
+
     const status = form.querySelector('.status') as HTMLElement;
     const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
     const fields = ['name', 'email', 'message'].map((id) => ({
@@ -161,6 +182,7 @@ const redirect = new URL('/thank-you/', business.url).href;
   input[type='text'],
   input[type='email'],
   input[type='tel'],
+  select,
   textarea {
     width: 100%;
     font: inherit;
@@ -171,6 +193,9 @@ const redirect = new URL('/thank-you/', business.url).href;
     background: var(--white);
     color: var(--ink);
     min-height: 50px;
+  }
+  select {
+    appearance: auto;
   }
   input[aria-invalid='true'],
   textarea[aria-invalid='true'] {
